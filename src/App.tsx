@@ -2,9 +2,13 @@ import { useQuery } from "react-query";
 import { AppWrapp } from "./AppStyled";
 import { ShipList } from "./containers/ShipList";
 import { Container } from "./components/Container";
+import { Filters } from "./containers/Filters";
+import { useState } from "react";
+
+import { data } from "./data.js";
 
 const endpoint = "https://vortex.korabli.su/api/graphql/glossary/";
-const FILMS_QUERY = `
+const SHIPS_QUERY = `
   {
     vehicles {
       title
@@ -36,11 +40,13 @@ const FILMS_QUERY = `
 `;
 
 export default function App() {
+  const [fetchedData, setFetchedData] = useState([]);
+
   // const { data, isLoading, error } = useQuery("launches", () => {
   //   return fetch(endpoint, {
   //     method: "POST",
   //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({ query: FILMS_QUERY }),
+  //     body: JSON.stringify({ query: SHIPS_QUERY }),
   //   })
   //     .then((response) => {
   //       if (response.status >= 400) {
@@ -49,16 +55,14 @@ export default function App() {
   //         return response.json();
   //       }
   //     })
-  //     .then((data) => console.log(data.data));
+  //     .then((data) => setFetchedData(data.data));
   // });
-
-  // if (isLoading) return "Loading...";
-  // if (error) return <pre>{error.message}</pre>;
 
   return (
     <AppWrapp>
       <Container>
-        <ShipList />
+        <Filters />
+        <ShipList data={data?.slice(0, 10)} />
       </Container>
     </AppWrapp>
   );
