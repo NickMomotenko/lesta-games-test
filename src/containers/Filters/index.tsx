@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 
 import { Select } from "../Select";
 import { Button } from "../../components/Button";
@@ -12,7 +12,6 @@ import {
 } from "./styled";
 
 import { shipLevel, shipNations, shipTypes } from "./data";
-import { useClickOutside } from "../../hooks/useClickOutside";
 
 type FiltersProps = {
   filters?: {
