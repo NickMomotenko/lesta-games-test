@@ -52,6 +52,14 @@ export default function App() {
   };
 
   useEffect(() => {
+    if (fetchedData && renderData) {
+      setTimeout(() => {
+        loader.setActive(false);
+      }, 1500);
+    }
+  }, [fetchedData, renderData]);
+
+  useEffect(() => {
     let updated = [...renderData];
 
     if (filters.level) {

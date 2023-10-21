@@ -15,7 +15,7 @@ export const LoaderContext = createContext<DataContextProps>({
 });
 
 export const LoaderProvider: React.FC<LoaderProviderProps> = ({ children }) => {
-  const [active, setActive] = useState<boolean>(false);
+  const [active, setActive] = useState<boolean>(true);
 
   useEffect(() => {
     if (active) {

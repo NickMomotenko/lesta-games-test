@@ -89,11 +89,11 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
     }
   }, [fetchedData]);
 
-  const updateRenderData = (updated: any) => {
+  const updateRenderData = (updated: IShip[]) => {
     setRenderData(updated);
   };
 
-  const updateDataWithFilter = (data: any) => {
+  const updateDataWithFilter = (data: IShip[]) => {
     setWithFilter(data);
   };
 

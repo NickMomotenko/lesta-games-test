@@ -11,7 +11,7 @@ export const ShipList: React.FC<ShipListProps> = ({ data }) => {
     <ShipListWrapp>
       <ShipListContent>
         {data?.length ? (
-          data?.map((ship: any, index: number) => (
+          data?.map((ship: IShip, index: number) => (
             <Ship as="li" key={`${ship.title}-${index}`} {...ship} />
           ))
         ) : (
