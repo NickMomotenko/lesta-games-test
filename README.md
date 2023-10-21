@@ -2,9 +2,8 @@
 
 Lesta Games test task
 
-- запуск приложения
-
-``yarn
+Запуск приложения
+```
+  yarn
   yarn dev
-
 ```
