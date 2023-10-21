@@ -1,7 +1,39 @@
 import React, { useEffect, useState, createContext, ReactNode } from "react";
+import { useQuery } from "react-query";
 
-import { data } from "../data.js";
 import { IShip } from "../components/Ship/types.js";
+
+const endpoint = "https://vortex.korabli.su/api/graphql/glossary/";
+const SHIPS_QUERY = `
+  {
+    vehicles {
+      title
+      description
+      icons {
+        large
+        medium
+      }
+      level
+      type {
+        name
+        title
+        icons {
+          default
+        }
+      }
+      nation {
+        name
+        title
+        color
+        icons {
+          small
+          medium
+          large
+        }
+      }
+    }
+  }
+`;
 
 interface DataContextProps {
   fetchedData: IShip[];
@@ -28,12 +60,28 @@ export const DataContext = createContext<DataContextProps>({
 });
 
 export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
-  const [fetchedData, setFetchedData] = useState<IShip[]>(data || []);
+  const [fetchedData, setFetchedData] = useState<IShip[]>([]);
   const [renderData, setRenderData] = useState<IShip[] | []>([]);
 
   const [withFilter, setWithFilter] = useState<IShip[] | []>([]);
 
   const [viewsCounter, setViewsCounter] = useState<number>(20);
+
+  useQuery("launches", () => {
+    return fetch(endpoint, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ query: SHIPS_QUERY }),
+    })
+      .then((response) => {
+        if (response.status >= 400) {
+          throw new Error("Error fetching data");
+        } else {
+          return response.json();
+        }
+      })
+      .then((data) => setFetchedData(data.data.vehicles));
+  });
 
   useEffect(() => {
     if (fetchedData) {

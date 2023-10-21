@@ -3,7 +3,7 @@ import React from "react";
 export const useClickOutside = (ref: any, handler: () => void) => {
   React.useEffect(() => {
     const listener = (event: MouseEvent | TouchEvent) => {
-      if (!ref.current || ref.current.contains(event.target)) {
+      if (!ref?.current || ref?.current.contains(event.target)) {
         return;
       }
       handler();

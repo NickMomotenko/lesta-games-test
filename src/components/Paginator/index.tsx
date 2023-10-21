@@ -1,3 +1,4 @@
+import React from "react";
 import { Select } from "../../containers/Select";
 import { PaginatorWrapp } from "./styled";
 
@@ -12,12 +13,15 @@ export const Paginator: React.FC<PaginatorProps> = ({
   currentPage,
   handleChangePage,
 }) => {
+  const paginatorRef = React.useRef<any>();
+
   return (
     <PaginatorWrapp>
       <Select
         list={Array.from({ length: pagesCounter }, (_, i) => i + 1)}
         baseTitle="1"
         renderTitle={currentPage?.toString()}
+        ref={paginatorRef}
         onClick={handleChangePage}
       />
     </PaginatorWrapp>

@@ -1,4 +1,3 @@
-import { useQuery } from "react-query";
 import { AppWrapp } from "./AppStyled";
 import { ShipList } from "./containers/ShipList";
 import { Container } from "./components/Container";
@@ -12,42 +11,16 @@ import { usePaginator } from "./hooks/usePaginator.js";
 import { Header } from "./components/Header/index.js";
 import { Paginator } from "./components/Paginator/index.js";
 import { LoaderContext } from "./context/LoaderContext.js";
-
-const endpoint = "https://vortex.korabli.su/api/graphql/glossary/";
-const SHIPS_QUERY = `
-  {
-    vehicles {
-      title
-      description
-      icons {
-        large
-        medium
-      }
-      level
-      type {
-        name
-        title
-        icons {
-          default
-        }
-      }
-      nation {
-        name
-        title
-        color
-        icons {
-          small
-          medium
-          large
-        }
-      }
-    }
-  }
-`;
+import { Spinner } from "./components/Spinner/index.js";
 
 export default function App() {
-  const { renderData, withFilter, viewsCounter, updateDataWithFilter } =
-    useContext(DataContext);
+  const {
+    fetchedData,
+    renderData,
+    withFilter,
+    viewsCounter,
+    updateDataWithFilter,
+  } = useContext(DataContext);
 
   const { filters, handleUpdateFilter, handleClearFilters } = useFilter();
   const loader = useContext(LoaderContext);
@@ -59,49 +32,7 @@ export default function App() {
       itemsLimit: viewsCounter,
     });
 
-  useEffect(() => {
-    let updated = [...renderData];
-
-    if (filters.level) {
-      updated = updated.filter((ship) => ship?.level === Number(filters.level));
-    }
-
-    if (filters.nation) {
-      updated = updated.filter((ship) => ship?.nation.name === filters.nation);
-    }
-
-    if (filters.type) {
-      updated = updated.filter((ship) => ship?.type?.name === filters.type);
-    }
-    resetCurrentPage();
-    updateDataWithFilter(updated);
-  }, [filters]);
-
-  // useEffect(() => {
-  //   setRenderData(fetchedData);
-  // }, [fetchedData]);
-
-  // const { data, isLoading, error } = useQuery("launches", () => {
-  //   return fetch(endpoint, {
-  //     method: "POST",
-  //     headers: { "Content-Type": "application/json" },
-  //     body: JSON.stringify({ query: SHIPS_QUERY }),
-  //   })
-  //     .then((response) => {
-  //       if (response.status >= 400) {
-  //         throw new Error("Error fetching data");
-  //       } else {
-  //         return response.json();
-  //       }
-  //     })
-  //     .then((data) => setFetchedData(data.data));
-  // });
-
-  useEffect(() => {
-    dataToRender();
-  }, [currentPage]);
-
-  function dataToRender() {
+  const dataToRender = () => {
     let start;
     let end;
 
@@ -114,11 +45,32 @@ export default function App() {
     }
 
     if (withFilter.length) {
-      return withFilter.slice(start, end);
-    } else {
-      return renderData.slice(start, end);
+      return withFilter?.slice(start, end);
+    } else if (renderData.length) {
+      return renderData?.slice(start, end);
     }
-  }
+  };
+
+  useEffect(() => {
+    let updated = [...renderData];
+
+    if (filters.level) {
+      updated = updated.filter((ship) => ship?.level === Number(filters.level));
+    }
+    if (filters.nation) {
+      updated = updated.filter((ship) => ship?.nation.name === filters.nation);
+    }
+    if (filters.type) {
+      updated = updated.filter((ship) => ship?.type?.name === filters.type);
+    }
+
+    resetCurrentPage();
+    updateDataWithFilter(updated);
+  }, [filters]);
+
+  useEffect(() => {
+    dataToRender();
+  }, [currentPage]);
 
   return (
     <AppWrapp>
@@ -136,7 +88,7 @@ export default function App() {
             handleChangePage={handleChangePage}
           />
         </Header>
-        <ShipList data={dataToRender()} />
+        {!fetchedData ? <Spinner /> : <ShipList data={dataToRender()} />}
       </Container>
       <Loader active={loader.active} />
     </AppWrapp>
