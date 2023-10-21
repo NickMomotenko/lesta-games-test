@@ -1,3 +1,5 @@
+import React, { useEffect } from "react";
+
 import { Select } from "../Select";
 import { Button } from "../../components/Button";
 
@@ -10,10 +12,15 @@ import {
 } from "./styled";
 
 import { shipLevel, shipNations, shipTypes } from "./data";
+import { useClickOutside } from "../../hooks/useClickOutside";
 
 type FiltersProps = {
-  filters?: {};
-  handleUpdateFilter?: () => void;
+  filters?: {
+    level?: string;
+    nation?: string;
+    type?: string;
+  };
+  handleUpdateFilter?: (key: string, value: string) => void;
   handleClearFilters?: () => void;
   currentPage?: number;
   pages?: number;
@@ -26,9 +33,13 @@ export const Filters: React.FC<FiltersProps> = ({
   handleClearFilters,
   resetCurrentPage,
 }) => {
+  const levelRef = React.useRef<any>();
+  const nationRef = React.useRef<any>();
+  const typeRef = React.useRef<any>();
+
   const handleReset = () => {
-    handleClearFilters();
-    resetCurrentPage();
+    handleClearFilters && handleClearFilters();
+    resetCurrentPage && resetCurrentPage();
   };
 
   return (
@@ -39,7 +50,10 @@ export const Filters: React.FC<FiltersProps> = ({
             baseTitle="Уровень"
             renderTitle={filters?.level}
             list={shipLevel}
-            onClick={(value) => handleUpdateFilter("level", value)}
+            ref={levelRef}
+            onClick={(value) =>
+              handleUpdateFilter && handleUpdateFilter("level", value)
+            }
           />
         </FiltersItem>
         <FiltersItem>
@@ -47,7 +61,10 @@ export const Filters: React.FC<FiltersProps> = ({
             baseTitle="Нация"
             renderTitle={filters?.nation}
             list={shipNations}
-            onClick={(value) => handleUpdateFilter("nation", value)}
+            ref={nationRef}
+            onClick={(value) =>
+              handleUpdateFilter && handleUpdateFilter("nation", value)
+            }
           />
         </FiltersItem>
         <FiltersItem>
@@ -55,7 +72,10 @@ export const Filters: React.FC<FiltersProps> = ({
             baseTitle="Класс"
             renderTitle={filters?.type}
             list={shipTypes}
-            onClick={(value) => handleUpdateFilter("type", value)}
+            ref={typeRef}
+            onClick={(value) =>
+              handleUpdateFilter && handleUpdateFilter("type", value)
+            }
           />
         </FiltersItem>
       </FilterOptions>

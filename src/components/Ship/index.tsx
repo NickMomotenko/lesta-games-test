@@ -14,6 +14,7 @@ import {
   ShipHeader,
   ShipInfo,
 } from "./styled";
+
 import { IShip } from "./types";
 
 type ShipProps = IShip;
@@ -25,9 +26,10 @@ export const Ship: React.FC<ShipProps> = ({
   nation,
   level,
   description,
+  as,
 }) => {
   return (
-    <ShipWrapp>
+    <ShipWrapp as={as}>
       <ShipImageWrapp>
         <ShipImage alt={`ship-${title}`} src={icons.medium} />
       </ShipImageWrapp>

@@ -17,7 +17,7 @@ export const Paginator: React.FC<PaginatorProps> = ({
       <Select
         list={Array.from({ length: pagesCounter }, (_, i) => i + 1)}
         baseTitle="1"
-        renderTitle={currentPage}
+        renderTitle={currentPage?.toString()}
         onClick={handleChangePage}
       />
     </PaginatorWrapp>

@@ -23,4 +23,5 @@ export type IShip = {
       large: string;
     };
   };
+  as?: string;
 };

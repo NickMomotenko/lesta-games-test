@@ -1,6 +1,17 @@
-export const shipLevel = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10"];
+export const shipLevel: string[] = [
+  "1",
+  "2",
+  "3",
+  "4",
+  "5",
+  "6",
+  "7",
+  "8",
+  "9",
+  "10",
+];
 
-export const shipNations = [
+export const shipNations: string[] = [
   "japan",
   "usa",
   "ussr",
@@ -15,7 +26,7 @@ export const shipNations = [
   "spain",
 ];
 
-export const shipTypes = [
+export const shipTypes: string[] = [
   "submarine",
   "destroyer",
   "cruiser",

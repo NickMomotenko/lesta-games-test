@@ -8,3 +8,5 @@ export const ShipNoData = styled.div`
   font-size: 30px;
   font-weight: 700;
 `;
+
+export const ShipListContent = styled.ul``;
