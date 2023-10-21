@@ -5,7 +5,7 @@ type SelectProps = {
   baseTitle?: string;
   renderTitle?: string | null;
   list: string[];
-  onClick?: () => void;
+  onClick?: React.Dispatch<React.SetStateAction<null | string | undefined>>;
 };
 
 export const Select: React.FC<SelectProps> = ({
@@ -18,6 +18,11 @@ export const Select: React.FC<SelectProps> = ({
 
   const title = renderTitle ? renderTitle : baseTitle;
 
+  const handleItemClick = (item: string) => {
+    onClick(item);
+    setIsActive(false);
+  };
+
   return (
     <SelectWrapp>
       <SelectDisplay onClick={() => setIsActive(!isActive)}>
@@ -25,8 +30,8 @@ export const Select: React.FC<SelectProps> = ({
       </SelectDisplay>
       {isActive && (
         <SelectList>
-          {list?.map((item, ind) => (
-            <SelectItem key={ind} onClick={() => onClick(item)}>
+          {list?.map((item: string, ind: number) => (
+            <SelectItem key={ind} onClick={() => handleItemClick(item)}>
               {item}
             </SelectItem>
           ))}

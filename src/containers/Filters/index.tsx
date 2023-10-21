@@ -1,45 +1,71 @@
-import { useState } from "react";
 import { Select } from "../Select";
-import { FiltersButton, FiltersItem, FiltersWrapp } from "./styled";
 import { Button } from "../../components/Button";
 
-type FiltersProps = {};
+import {
+  FilterOptions,
+  FiltersButton,
+  FiltersControlls,
+  FiltersItem,
+  FiltersWrapp,
+} from "./styled";
 
-export const Filters: React.FC<FiltersProps> = () => {
-  const [level, setLevel] = useState(null);
-  const [nation, setNation] = useState(null);
-  const [type, setType] = useState(null);
+import { shipLevel, shipNations, shipTypes } from "./data";
+
+type FiltersProps = {
+  filters?: {};
+  handleUpdateFilter?: () => void;
+  handleClearFilters?: () => void;
+  currentPage?: number;
+  pages?: number;
+  resetCurrentPage?: () => void;
+};
+
+export const Filters: React.FC<FiltersProps> = ({
+  filters,
+  handleUpdateFilter,
+  handleClearFilters,
+  resetCurrentPage,
+}) => {
+  const handleReset = () => {
+    handleClearFilters();
+    resetCurrentPage();
+  };
 
   return (
     <FiltersWrapp>
-      <FiltersItem>
-        <Select
-          baseTitle="Уровень"
-          renderTitle={level}
-          list={["1", "2", "3"]}
-          onClick={setLevel}
-        />
-      </FiltersItem>
-      <FiltersItem>
-        <Select
-          baseTitle="Нация"
-          renderTitle={level}
-          list={["1", "2", "3"]}
-          onClick={setLevel}
-        />
-      </FiltersItem>
-      <FiltersItem>
-        <Select
-          baseTitle="Класс"
-          renderTitle={level}
-          list={["1", "2", "3"]}
-          onClick={setLevel}
-        />
-      </FiltersItem>
-      <FiltersButton>
-        <Button>Применить</Button>
-        <Button view="ghost">Сбросить</Button>
-      </FiltersButton>
+      <FilterOptions>
+        <FiltersItem>
+          <Select
+            baseTitle="Уровень"
+            renderTitle={filters?.level}
+            list={shipLevel}
+            onClick={(value) => handleUpdateFilter("level", value)}
+          />
+        </FiltersItem>
+        <FiltersItem>
+          <Select
+            baseTitle="Нация"
+            renderTitle={filters?.nation}
+            list={shipNations}
+            onClick={(value) => handleUpdateFilter("nation", value)}
+          />
+        </FiltersItem>
+        <FiltersItem>
+          <Select
+            baseTitle="Класс"
+            renderTitle={filters?.type}
+            list={shipTypes}
+            onClick={(value) => handleUpdateFilter("type", value)}
+          />
+        </FiltersItem>
+      </FilterOptions>
+      <FiltersControlls>
+        <FiltersButton>
+          <Button view="ghost" onClick={handleReset}>
+            Сбросить
+          </Button>
+        </FiltersButton>
+      </FiltersControlls>
     </FiltersWrapp>
   );
 };

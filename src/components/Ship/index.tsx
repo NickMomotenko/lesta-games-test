@@ -14,8 +14,9 @@ import {
   ShipHeader,
   ShipInfo,
 } from "./styled";
+import { IShip } from "./types";
 
-type ShipProps = {};
+type ShipProps = IShip;
 
 export const Ship: React.FC<ShipProps> = ({
   title,
@@ -37,7 +38,6 @@ export const Ship: React.FC<ShipProps> = ({
               src={nation.icons.small}
               alt={`${nation.name}-icon`}
             />
-            <ShipTitle>{title}</ShipTitle>
           </ShipNation>
           <ShipInfo>
             <ShipNationTitle>{nation.title}</ShipNationTitle>
@@ -51,6 +51,7 @@ export const Ship: React.FC<ShipProps> = ({
             <ShipLevel>{level} уровень</ShipLevel>
           </ShipInfo>
         </ShipHeader>
+        <ShipTitle>{title}</ShipTitle>
         <ShipDescription>{description}</ShipDescription>
       </ShipContent>
     </ShipWrapp>

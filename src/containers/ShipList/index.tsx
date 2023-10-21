@@ -1,19 +1,21 @@
 import { Ship } from "../../components/Ship";
-import { ShipListWrapp } from "./styled";
+import { IShip } from "../../components/Ship/types";
+import { ShipListWrapp, ShipNoData } from "./styled";
 
 type ShipListProps = {
-  data?: any;
+  data?: IShip[];
 };
 
 export const ShipList: React.FC<ShipListProps> = ({ data }) => {
-
-  console.log(data);
-  
   return (
     <ShipListWrapp>
-      {data?.map((ship: any, index: number) => (
-        <Ship key={`${ship.title}-${index}`} {...ship} />
-      ))}
+      {data?.length ? (
+        data?.map((ship: any, index: number) => (
+          <Ship key={`${ship.title}-${index}`} {...ship} />
+        ))
+      ) : (
+        <ShipNoData>Не удалось ничего найти</ShipNoData>
+      )}
     </ShipListWrapp>
   );
 };

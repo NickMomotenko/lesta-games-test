@@ -12,4 +12,24 @@ export const FiltersItem = styled.div`
   }
 `;
 
-export const FiltersButton = styled.div``;
+export const FiltersButton = styled.div`
+  margin-right: 15px;
+
+  &:last-child {
+    margin-right: 0;
+  }
+`;
+
+export const FiltersControlls = styled.div`
+  display: flex;
+`;
+
+export const FilterOptions = styled.div`
+  display: flex;
+  margin-right: 30px;
+`;
+
+export const FiltersPaginator = styled.div`
+  display: flex;
+  margin-left: auto;
+`;

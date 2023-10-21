@@ -3,14 +3,22 @@ import styled from "styled-components";
 export const SelectWrapp = styled.div`
   display: inline-block;
   min-width: 115px;
+  position: relative;
 `;
 
 export const SelectList = styled.ul`
   border-radius: 10px;
-  /* border: 1px solid; */
   margin-top: 5px;
   overflow: hidden;
   box-shadow: 0 0 5px #ebdcdcc7;
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #fff;
+
+  max-height: 350px;
+  overflow-y: auto;
 `;
 
 export const SelectItem = styled.li`

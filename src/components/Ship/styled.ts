@@ -31,17 +31,24 @@ export const ShipSubtitle = styled.div`
   color: #8b7070;
 `;
 
-export const ShipImageWrapp = styled.div``;
+export const ShipImageWrapp = styled.div`
+  max-width: 435px;
+  max-height: 295px;
+  flex-shrink: 0;
+`;
 
-export const ShipImage = styled.img``;
+export const ShipImage = styled.img`
+  height: 100%;
+  width: 100%;
+`;
 
-export const ShipContent = styled.div``;
+export const ShipContent = styled.div`
+  margin-left: 20px;
+`;
 
 export const ShipTitle = styled.div`
   font-weight: 700;
-  text-align: center;
   font-size: 40px;
-  margin-top: 10px;
 `;
 
 export const ShipClass = styled(ShipRow)``;
@@ -57,12 +64,15 @@ export const ShipDescription = styled.p`
 
 export const ShipMiniIcon = styled.img``;
 
-export const ShipLevel = styled(ShipSubtitle)``;
+export const ShipLevel = styled(ShipSubtitle)`
+  margin-left: 0;
+`;
 
 export const ShipNationTitle = styled(ShipSubtitle)`
   font-weight: 700;
   font-size: 20px;
   color: #000;
+  margin-left: 0;
 `;
 
 export const ShipHeader = styled(ShipRow)`
